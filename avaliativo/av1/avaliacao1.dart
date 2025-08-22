@@ -13,19 +13,21 @@ String lerEntrada(String mensagem) {
   return entrada;
 }
 
-// estrutura do serviço
-class Servico {
+// estrutura do produto com estoque
+class Produto {
   String nome;
   double preco;
+  int estoque;
 
-  Servico(this.nome, this.preco);
+  Produto(this.nome, this.preco, this.estoque);
 }
 
-// função para listar serviços disponíveis
-void listarServicos(List<Servico> servicos) {
-  print("\n=== Lista de Serviços da Papelaria ===");
-  for (int i = 0; i < servicos.length; i++) {
-    print("${i + 1}. ${servicos[i].nome} - R\$ ${servicos[i].preco.toStringAsFixed(2)}");
+// função para listar produtos disponíveis
+void listarProdutos(List<Produto> produtos) {
+  print("\n=== Lista de Produtos da Papelaria ===");
+  for (int i = 0; i < produtos.length; i++) {
+    print("${i + 1}. ${produtos[i].nome} - R\$ ${produtos[i].preco.toStringAsFixed(2)} "
+          "(Estoque: ${produtos[i].estoque})");
   }
   print("======================================");
 }
@@ -35,29 +37,39 @@ void main() {
   String nomeCliente = lerEntrada("Digite seu nome: ");
   String documentoCliente = lerEntrada("Digite seu documento: ");
 
-  // lista de serviços (nao fiz com estoque)
-  List<Servico> servicos = [
-    Servico("Xerox (por página)", 0.50),
-    Servico("Encadernação", 8.00),
-    Servico("Impressão colorida (por página)", 1.50),
-    Servico("Plastificação", 5.00),
-    Servico("Serviço de digitação", 12.00),
+  // lista de produtos com estoque
+  List<Produto> produtos = [
+    Produto("Caderno", 15.00, 100),
+    Produto("Caneta", 2.50, 200),
+    Produto("Lápis", 1.50, 150),
+    Produto("Borracha", 1.00, 80),
+    Produto("Pacote de Papel A4", 25.00, 50),
   ];
 
   // carrinho
-  List<Servico> carrinho = [];
+  List<Produto> carrinho = [];
   List<int> quantidades = [];
 
-  // escolha dos serviços
+  // escolha dos produtos
   String continuar;
   do {
-    listarServicos(servicos);
+    listarProdutos(produtos);
 
     int escolha = -1;
-    while (escolha < 1 || escolha > servicos.length) {
+    while (escolha < 1 || escolha > produtos.length) {
+      stdout.write("Escolha um produto (1-${produtos.length}): ");
+      String? entrada = stdin.readLineSync();
+
+      if (entrada == null || entrada.trim().isEmpty) {
+        print("Opção inválida. Não pode ser vazio.");
+        continue;
+      }
+
       try {
-        stdout.write("Escolha um serviço (1-${servicos.length}): ");
-        escolha = int.parse(stdin.readLineSync()!);
+        escolha = int.parse(entrada);
+        if (escolha < 1 || escolha > produtos.length) {
+          print("Opção inválida. Escolha entre 1 e ${produtos.length}.");
+        }
       } on FormatException {
         print("Digite um número válido!");
         escolha = -1;
@@ -65,22 +77,27 @@ void main() {
     }
 
     int qtd = 0;
-    while (qtd <= 0) {
+    while (qtd <= 0 || qtd > produtos[escolha - 1].estoque) {
       try {
         stdout.write("Digite a quantidade desejada: ");
         qtd = int.parse(stdin.readLineSync()!);
         if (qtd <= 0) {
           print("Quantidade deve ser maior que zero!");
+        } else if (qtd > produtos[escolha - 1].estoque) {
+          print("Quantidade indisponível em estoque! Estoque atual: ${produtos[escolha - 1].estoque}");
         }
       } on FormatException {
         print("Digite um número válido!");
       }
     }
 
-    carrinho.add(servicos[escolha - 1]);
+    carrinho.add(produtos[escolha - 1]);
     quantidades.add(qtd);
 
-    stdout.write("Deseja adicionar outro serviço? (s/n): ");
+    // reduzir estoque
+    produtos[escolha - 1].estoque -= qtd;
+
+    stdout.write("Deseja adicionar outro produto? (s/n): ");
     continuar = stdin.readLineSync()!.toLowerCase().trim();
   } while (continuar == "s");
 
@@ -89,6 +106,9 @@ void main() {
   for (int i = 0; i < carrinho.length; i++) {
     subtotal += carrinho[i].preco * quantidades[i];
   }
+
+  // mostrar total após finalizar compras
+  print("\n>>> Valor total da compra até agora: R\$ ${subtotal.toStringAsFixed(2)}");
 
   // formas de pagamento
   print("\nFormas de pagamento:");
@@ -136,7 +156,7 @@ void main() {
         stdout.write("Informe o valor em dinheiro recebido: ");
         valorPago = double.parse(stdin.readLineSync()!);
         if (valorPago < total) {
-          print("Valor insuficiente. Informe um valor maior ou igual a R\$ ${total.toStringAsFixed(2)}");
+          print("Valor insuficiente!! Informe um valor maior ou igual a R\$ ${total.toStringAsFixed(2)}");
         }
       } on FormatException {
         print("Digite um número válido!");
