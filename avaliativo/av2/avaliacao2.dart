@@ -36,7 +36,7 @@ class Cachorro extends Animal {
 
   @override
   void emitirSom() {
-    print("$nome Au Au!");
+    print("$nome faz Au Au!");
   }
 
   @override
@@ -45,11 +45,27 @@ class Cachorro extends Animal {
   }
 }
 
+// add terceira subclasse
+class Gato extends Animal {
+  Gato(String nome, String porte) : super(nome, porte);
+
+  @override
+  void emitirSom() {
+    print("$nome faz Miauuuu!");
+  }
+
+  @override
+  void alimentar() {
+    print("$nome está comendo petisco.");
+  }
+}
+
 // função principal main
 void main() {
   List<Animal> animais = [
     Leao("Simba", "Grande"),
     Cachorro("Frank", "Médio"),
+    Gato("Naninha", "Pequeno"),
   ];
 
   print("===== Relatório do Zoológico ZOOMANGE =====");
