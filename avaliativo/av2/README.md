@@ -6,9 +6,9 @@ Você foi contratado pelo zoológico **ZOOMANGE** para desenvolver um
 sistema de gestão de animais, que organiza os animais por **espécie** e
 **porte** (pequeno, médio ou grande).
 
-O sistema deve:\
-- Listar todos os animais cadastrados.\
-- Gerar um **relatório simples**.\
+O sistema deve:
+- Listar todos os animais cadastrados.
+- Gerar um **relatório simples**.
 - Executar **ações específicas** de acordo com o tipo de animal (por
 exemplo: emitir som, realizar alimentação).
 
@@ -25,10 +25,10 @@ melhorias para torná-lo mais intuitivo para os funcionários.
 Agora, o sistema também deve contar com um **menu interativo** com as
 seguintes funcionalidades:
 
--   ✅ Cadastrar novos animais.\
--   ✅ Listar todos os animais cadastrados.\
--   ✅ Editar dados de um animal existente.\
--   ✅ Remover um animal.\
+-   ✅ Cadastrar novos animais.
+-   ✅ Listar todos os animais cadastrados.
+-   ✅ Editar dados de um animal existente.
+-   ✅ Remover um animal.
 -   ✅ Aplicar pelo menos um tipo de filtro (por exemplo, por espécie ou
     por porte).
 
@@ -36,12 +36,12 @@ seguintes funcionalidades:
 
 ## 💡 Tecnologias
 
--   Linguagem: **Dart**\
--   Paradigma: **Programação Orientada a Objetos (POO)**\
+-   Linguagem: **Dart**
+-   Paradigma: **Programação Orientada a Objetos (POO)**
 -   Conceitos aplicados:
-    -   **Herança**\
-    -   **Polimorfismo**\
-    -   **Abstração**\
+    -   **Herança**
+    -   **Polimorfismo**
+    -   **Abstração**
     -   **Encapsulamento**
 
 
