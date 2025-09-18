@@ -1,9 +1,16 @@
 // classe base (herança - classe pai)
 abstract class Animal {
-  String nome;
-  String porte; // pequeno, médio, grande
+  String _nome;
+  String _porte; // pequeno, médio, grande
 
-  Animal(this.nome, this.porte);
+  Animal(this._nome, this._porte);
+
+  // getters e setters para encapsulamentoo
+  String get nome => _nome;
+  set nome(String n) => _nome = n;
+
+  String get porte => _porte;
+  set porte(String p) => _porte = p;
 
   // fznd polimorfismo
   void emitirSom();
@@ -11,7 +18,7 @@ abstract class Animal {
 
   // método comum para todas as subclasses
   void exibirInfo() {
-    print("Animal: $nome | Porte: $porte");
+    print("Animal: $_nome | Porte: $_porte");
   }
 }
 
